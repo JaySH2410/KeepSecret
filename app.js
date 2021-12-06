@@ -61,13 +61,13 @@ app.post("/register", function(req, res){
 
 app.post("/login", function(req, res){
   const username = req.body.username;
-  const password = req.body.password;
+  const password = md5(req.body.password); 
 
   User.findOne({email: username}, function(err, foundUser){
     if(err){
       console.log(err);
     } else {
-      if(foundUser.password === md5(password)){
+      if(foundUser.password === password){  //you can use md5(msg),but we prefer above
         res.render("secrets");
       } else {
         res.send("/");
